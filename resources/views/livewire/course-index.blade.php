@@ -40,7 +40,6 @@
     </div>
 
     <div class="container grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8">
-        <div class="text-yellow-400 hidden"></div>
         @foreach ($courses as $course)
             <x-course-card :course="$course" />
         @endforeach

@@ -1,9 +1,9 @@
 @props(['course'])
 
-<article class="bg-white shadow-lg rounded-lg overflow-hidden">
+<article class="card">
     <img class="h-36 w-full object-cover object-center" src="{{Storage::url($course->image->url)}}" alt="{{$course->title}}" title="{{$course->title}}">
-    <div class="px-6 py-4">
-        <h1 class="text-xl text-gray-700 mb-2 leading-6">{{Str::limit($course->title, 40)}}</h1>
+    <div class="card-body">
+        <h1 class="card-title">{{Str::limit($course->title, 40)}}</h1>
         <p class="text-gray-500 text-sm mb-2">Prof: {{$course->teacher->name}}</p>
         <div class="flex">
             <ul class="flex text-sm gap-1">
@@ -28,7 +28,7 @@
                 ({{$course->students_count}})
             </p>
         </div>
-        <button class="w-full mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button class="w-full mt-4 btn btn-primary">
             <a href="{{route('courses.show', $course)}}">Más información</a>
         </button>
     </div>
