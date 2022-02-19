@@ -2,7 +2,11 @@
     <section class="bg-gray-700 py-12 mb-12">
         <div class="container grid grid-cols-1 lg:grid-cols-2 gap-6">
             <figure>
-                <img class="h-60 w-full object-center object-cover" src="{{Storage::url($course->image->url)}}" alt="{{$course->title}}" title="{{$course->title}}">
+                @if ($course->image)
+                    <img class="h-60 w-full object-center object-cover" src="{{Storage::url($course->image->url)}}" alt="{{$course->title}}" title="{{$course->title}}">
+                @else
+                    <img class="h-60 w-full object-center object-cover" src="{{asset('img/cursos/default.jpg')}}" alt="{{$course->title}}" title="{{$course->title}}">
+                @endif
             </figure>
             <div class="text-white">
                 <h1 class="text-4xl">{{$course->title}}</h1>
@@ -16,21 +20,40 @@
         </div>
     </section>
     <div class="container grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        @if (session('info'))
+            <div class="lg:col-span-3" x-data="{open: true}" x-show="open">
+                <div class="bg-red-900 text-center py-4 lg:px-4 transition-all ease-in-out relative">
+                    <div class="p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                    <span class="flex justify-center items-center rounded-full bg-red-500 uppercase p-2 h-8 w-8 text-lg font-bold mr-3"><i class="fa-solid fa-circle-exclamation"></i></span>
+                    <span class="font-semibold mr-2 text-left flex-auto">{{session('info')}}</span>
+                    </div>
+                    <span x-on:click="open = false" class="cursor-pointer absolute top-2 right-2 text-lg text-white"><i class="fa-solid fa-circle-xmark"></i></span>
+                </div>
+            </div>
+        @endif
+
         <div class="order-2 lg:order-1 lg:col-span-2">
+
+            {{-- Metas --}}
             <section class="card mb-12">
                 <div class="card-body">
                     <h1 class="font-bold text-2xl mb-2">Lo que aprenderás</h1>
                     <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
-                        @foreach ($course->goals as $goal)
+
+                        @forelse ($course->goals as $goal)
                             <li class="text-gray-700 text-base"><i class="fas fa-check text-gray-600 mr-2"></i>{{$goal->name}}</li>
-                        @endforeach
+                        @empty
+                        <li class="text-gray-700 text-base">Este curso no cuenta con metas asignadas</li>
+                        @endforelse
                     </ul>
                 </div>
             </section>
 
+            {{-- Temario --}}
             <section class="mb-12">
                 <h1 class="font-bold text-3xl mb-2">Temario</h1>
-                @foreach ($course->sections as $section)
+                @forelse ($course->sections as $section)
                     <article class="mb-4 shadow"
                     @if($loop->first)
                         x-data="{ open: true }"
@@ -48,15 +71,24 @@
                             </ul>
                         </div>
                     </article>
-                @endforeach
+                @empty
+                    <article class="card">
+                        <div class="card-body">
+                            Este curso no cuenta con secciónes asignadas
+                        </div>
+                    </article>
+                @endforelse
             </section>
 
+            {{-- Requisitos --}}
             <section class="mb-8">
                 <h1 class="font-bold text-3xl">Requisitos</h1>
                 <ul class="list-disc list-inside">
-                    @foreach ($course->requirements as $requirement)
-                        <li class="text-gray-700 text-base"></i>{{$requirement->name}}</li>
-                    @endforeach
+                    @forelse ($course->requirements as $requirement)
+                        <li class="text-gray-700 text-base">{{$requirement->name}}</li>
+                    @empty
+                        <li class="text-gray-700 text-base">Este curso no tiene requisitos</li>
+                    @endforelse
                 </ul>
             </section>
 
@@ -78,14 +110,12 @@
                         </div>
                     </div>
                     
-                    @can('enrolled', $course)
-                        <button type="submit" class="btn btn-danger w-full mt-4"><a href="{{route('courses.status', $course)}}">Continuar con el curso</a></button>
-                    @else
-                        <form action="{{route('courses.enrolled', $course)}}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger w-full mt-4">Llevar este curso</button>
-                        </form>
-                    @endcan
+                    <form action="{{route('admin.courses.approved', $course)}}" method="POST" class="mt-4">
+                        @csrf
+                        <button class="btn btn-primary w-full" type="submit">Aprobar curso</button>
+                    </form>
+
+                    <a href="{{route('admin.courses.observations', $course)}}" class="btn btn-danger w-full block text-center mt-4">Observar curso</a>
 
                 </div>
             </section>
