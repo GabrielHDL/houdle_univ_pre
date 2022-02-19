@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -30,5 +29,3 @@ Route::get('/course/{course}', [CourseController::class, 'show'])->name('courses
 Route::post('/courses/{course}/enrolled', [CourseController::class, 'enrolled'])->middleware('auth')->name('courses.enrolled');
 
 Route::get('/course-status/{course}', CourseStatus::class)->middleware('auth')->name('courses.status');
-
-Route::get('/course/{course}/certficate/{certificate}', [CertificateController::class, 'show'])->middleware('auth')->name('courses.certificate');
