@@ -89,23 +89,6 @@
 
                 </div>
             </section>
-
-            <aside class="hidden lg:block">
-                @foreach ($similares as $similar)
-                    <article class="flex mb-6">
-                        <img class="h-32 w-40 object-cover" src="{{Storage::url($similar->image->url)}}" alt="">
-                        <div class="ml-3">
-                            <h1 class="font-bold text-gray-500 mb-3"><a href="{{route('courses.show', $similar)}}">{{Str::limit($similar->title, 40)}}</a></h1>
-                            <div class="flex items-center mb-2">
-                                <img class="h-8 w-8 object-cover object-center rounded-full shadow-lg" src="{{$similar->teacher->profile_photo_url}}" alt="">
-                                <p class="text-gray-700 text-sm ml-2">{{$similar->teacher->name}}</p>
-                            </div>
-                            @for ($i = 0; $i < $similar->rating; $i++) <i class="fas fa-star text-sm text-yellow-400"></i> @endfor
-                        </div>                        
-                    </article>
-                @endforeach
-            </aside>
-
         </div>
     </div>
 </x-app-layout>

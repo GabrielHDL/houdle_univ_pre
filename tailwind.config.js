@@ -19,6 +19,10 @@ module.exports = {
     corePlugins: {
         container: false,
     },
+    
+    variants: {
+        opacity: ['responsive', 'hover', 'focus', 'disabled'],
+    },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

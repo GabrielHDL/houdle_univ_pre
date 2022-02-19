@@ -23,11 +23,15 @@
 }
 
 .form-input {
-    @apply shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight;
+    @apply mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm;
 }
 
 .form-input:focus {
-    @apply outline-none;
+    @apply outline-none ring-indigo-500 border-indigo-500;
+}
+
+.disabled {
+    @apply opacity-50 cursor-not-allowed;
 }
 
 .embed-responsive {
@@ -48,6 +52,10 @@
 @media (min-width: 640px) {
     .container{
         @apply px-6;
+    }
+
+    .form-input {
+        @apply text-sm;
     }
 }
 

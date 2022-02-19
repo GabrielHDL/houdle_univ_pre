@@ -73,7 +73,6 @@ class Course extends Model
         return $this->hasMany(Section::class);
     }
 
-
     // Relación uno a muchos inversa
     public function teacher()
     {

@@ -43,12 +43,12 @@
                 </div>
             @endif
             <!-- Page Content -->
-            <div class="container py-8 grid grid-cols-5">
+            <div class="container py-8 grid grid-cols-5 gap-6">
 
                 <aside>
                     <h1 class="font-bold text-lg mb-4">Edición del curso</h1>
                     
-                    <ul class="text-sm text-gray-600">
+                    <ul class="text-sm text-gray-600 mb-6">
                         <li class="leading-7 mb-1 border-l-4 @routeIs('teacher.courses.edit', $course) border-indigo-400 @else border-transparent @endif pl-2">
                             <a href="{{route('teacher.courses.edit', $course)}}">Información del curso</a>
                         </li>
@@ -57,14 +57,33 @@
                             <a href="{{route('teacher.courses.curriculum', $course)}}">Lecciones del curso</a>
                         </li>
         
-                        <li class="leading-7 mb-1 border-l-4 border-transparent pl-2">
-                            <a href="">Metas del curso</a>
+                        <li class="leading-7 mb-1 border-l-4 @routeIs('teacher.courses.goals', $course) border-indigo-400 @else border-transparent @endif pl-2">
+                            <a href="{{route('teacher.courses.goals', $course)}}">Metas del curso</a>
                         </li>
         
-                        <li class="leading-7 mb-1 border-l-4 border-transparent pl-2">
-                            <a href="">Alumnos</a>
+                        <li class="leading-7 mb-1 border-l-4 @routeIs('teacher.courses.students', $course) border-indigo-400 @else border-transparent @endif pl-2">
+                            <a href="{{route('teacher.courses.students', $course)}}">Alumnos</a>
                         </li>
                     </ul>
+                    <span class="text-lg font-bold">Estado del curso</span>
+                    <hr class="mt-2 mb-4">
+                    @switch($course->status)
+                        @case(1)
+                            <form action="{{route('teacher.courses.status', $course)}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger" text-white py-2 px-4 rounded-full">Enviar a revisión</button>
+                            </form>
+                            @break
+                        @case(2)
+                            <span class="px-2 inline-flex text-xs leading-5 border-amber-800 border font-semibold rounded-full bg-amber-100 text-amber-800">Curso en revisión</span>
+                            @break
+                        @case(3)
+                        <span class="px-2 inline-flex text-xs leading-5 border-green-800 border font-semibold rounded-full bg-green-100 text-green-800">Curso publicado</span>
+                            @break
+                        @default
+                            
+                    @endswitch
+
                 </aside>
         
                 <div class="col-span-4 card">

@@ -1,8 +1,8 @@
 <div class="container py-8">
     <x-table-responsive>
 
-        <div class="px-6 py-4 flex">
-            <input wire:model="search" wire:keydown="limpiar_page" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline flex-1" placeholder="Aa" />
+        <div class="px-6 py-4 flex items-center">
+            <input wire:model="search" wire:keydown="limpiar_page" class="form-input flex-1" placeholder="Aa" />
             <a href="{{route('teacher.courses.create')}}"><button class="btn btn-danger ml-2">Crear curso</button></a>
         </div>
 
