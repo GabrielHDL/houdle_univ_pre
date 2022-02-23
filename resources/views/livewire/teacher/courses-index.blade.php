@@ -66,7 +66,10 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
 
-                                @switch($course->status)
+                                @if ($course->observations)
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800"> Observaciones </span>
+                                @else
+                                    @switch($course->status)
                                     @case(1)
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"> Borrador </span>
                                         @break
@@ -78,7 +81,8 @@
                                         @break
                                     @default
                                         
-                                @endswitch
+                                    @endswitch
+                                @endif
 
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

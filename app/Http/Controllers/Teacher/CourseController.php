@@ -172,7 +172,17 @@ class CourseController extends Controller
     {
         $course->status = 2;
         $course->save();
+
+        if ($course->observations) {
+            $course->observations->delete();
+        }
         
-        return back();
+        return redirect()->route('teacher.courses.edit', $course)
+                         ->with('info-wait', 'Curso enviado a revisión con éxito');
+    }
+
+    public function observations(Course $course)
+    {
+        return view('teacher.courses.observations', compact('course'));
     }
 }

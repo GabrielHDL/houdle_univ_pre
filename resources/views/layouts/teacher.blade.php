@@ -42,6 +42,14 @@
                     </div>
                 </div>
             @endif
+            @if (session('info-wait'))
+                <div class="bg-amber-900 text-center py-4 lg:px-4 transition-all ease-in-out">
+                    <div class="p-2 bg-amber-800 items-center text-amber-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                    <span class="flex justify-center items-center rounded-full bg-amber-500 uppercase p-2 h-8 w-8 text-xs font-bold mr-3"><i class="fa-solid fa-hourglass-start"></i></span>
+                    <span class="font-semibold mr-2 text-left flex-auto">{{session('info-wait')}}</span>
+                    </div>
+                </div>
+            @endif
             <!-- Page Content -->
             <div class="container py-8 grid grid-cols-5 gap-6">
 
@@ -64,17 +72,19 @@
                         <li class="leading-7 mb-1 border-l-4 @routeIs('teacher.courses.students', $course) border-indigo-400 @else border-transparent @endif pl-2">
                             <a href="{{route('teacher.courses.students', $course)}}">Alumnos</a>
                         </li>
-
-                        @if ($course->obsevations)
-                            <li class="leading-7 mb-1 border-l-4 @routeIs('teacher.courses.students', $course) border-indigo-400 @else border-transparent @endif pl-2">
-                                <a href="{{route('teacher.courses.students', $course)}}">Observaciones</a>
+                        @if ($course->observations)
+                            <li class="leading-7 mb-1 border-l-4 @routeIs('teacher.courses.observations', $course) border-amber-400 @else border-transparent @endif pl-2">
+                                <a class="font-bold text-red-600 uppercase" href="{{route('teacher.courses.observations', $course)}}">Observaciones</a>
                             </li>
                         @endif
 
                     </ul>
-                    <span class="text-lg font-bold">Estado del curso</span>
-                    <hr class="mt-2 mb-4">
-                    @switch($course->status)
+                        <span class="text-lg font-bold">Estado del curso</span>
+                        <hr class="mt-2 mb-4">
+                    @if ($course->observations)
+                        <span class="px-2 inline-flex text-xs leading-5 border-orange-800 border font-semibold rounded-full bg-orange-100 text-orange-800">Curso con observaciones</span>
+                    @else
+                        @switch($course->status)
                         @case(1)
                             <form action="{{route('teacher.courses.status', $course)}}" method="POST">
                                 @csrf
@@ -89,7 +99,8 @@
                             @break
                         @default
                             
-                    @endswitch
+                        @endswitch
+                    @endif
 
                 </aside>
         
