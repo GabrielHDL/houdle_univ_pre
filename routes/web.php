@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Livewire\CourseStatus;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,7 @@ Route::get('/course/{course}', [CourseController::class, 'show'])->name('courses
 Route::post('/courses/{course}/enrolled', [CourseController::class, 'enrolled'])->middleware('auth')->name('courses.enrolled');
 
 Route::get('/course-status/{course}', CourseStatus::class)->middleware('auth')->name('courses.status');
+
+Route::get('link', function() {
+    Artisan::call('storage:link');
+});
